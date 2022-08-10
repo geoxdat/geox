@@ -28,27 +28,27 @@ class ProjectVersion:
         self._timestamp = datetime.now()
         
         
-    def read_collar_data(filename: str=DatasetType.COLLAR, save_to_file: bool=True):
+    def read_collar_data(self, filename: str=DatasetType.COLLAR, save_to_file: bool=True):
         ...
 
         
-    def read_survey_data(filename: str=DatasetType.SURVEY, save_to_file: bool=True):
+    def read_survey_data(self, filename: str=DatasetType.SURVEY, save_to_file: bool=True):
         ...
 
         
-    def read_alteration_data(filename: str=DatasetType.ALTERATION, save_to_file: bool=True):
+    def read_alteration_data(self, filename: str=DatasetType.ALTERATION, save_to_file: bool=True):
         ...
 
         
-    def read_assay_data(filename: str=DatasetType.ASSAY, save_to_file: bool=True):
+    def read_assay_data(self, filename: str=DatasetType.ASSAY, save_to_file: bool=True):
         ...
 
         
-    def read_litho_data(filename: str=DatasetType.LITHO, save_to_file: bool=True):
+    def read_litho_data(self, filename: str=DatasetType.LITHO, save_to_file: bool=True):
         ...
 
         
-    def read_mineralisation_data(filename: str=DatasetType.MINERALISATION, save_to_file: bool=True):
+    def read_mineralisation_data(self, filename: str=DatasetType.MINERALISATION, save_to_file: bool=True):
         ...
 
         
