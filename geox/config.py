@@ -1,1 +1,1 @@
-HOST = 'http://localhost:8000'
+SERVER_HOST = 'http://localhost:8000'

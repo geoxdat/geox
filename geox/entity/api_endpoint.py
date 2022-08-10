@@ -1,5 +1,8 @@
+from geox.config import SERVER_HOST
+
+
 class APIEndpoint:
-    __API_V1_EXTERNAL = '/v1/geox'
+    __API_V1_EXTERNAL = SERVER_HOST + '/v1/geox'
 
     GET_INITIAL_AUTH = __API_V1_EXTERNAL + '/init'
     GET_USER_PROJECTS = __API_V1_EXTERNAL + '/project/all'
