@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from geox.api_caller.initial_auth import call_initial_auth
+from geox.api_caller.initial_auth import get_initial_auth
 
 from geox.project import Project
 from geox.version import VERSION
@@ -23,7 +23,7 @@ class GeoX:
     
     def _initial_auth(self):
         if not self._is_authenticated:
-            http_response = call_initial_auth(self.api_key)
+            http_response = get_initial_auth(self.api_key)
             self.email = http_response.email
             self.num_of_projects = http_response.num_of_projects
             self._is_authenticated = True
