@@ -46,6 +46,7 @@ class GeoX:
     def read_project(self, project_id: str) -> Project:
         if not self.email: return
         http_response = get_project(self.api_key, project_id)
+        if http_response.project: http_response.project.set_api_key(self.api_key)
         return http_response.project
 
 

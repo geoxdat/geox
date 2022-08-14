@@ -3,9 +3,11 @@ import pandas as pd
 
 from geox.entity.dataset_type import DatasetType
 
-class ProjectVersion:
+class   ProjectVersion:
     def __init__(self, hash: str):
         self.hash: str = hash
+        
+        self.id: int = None
         
         self.collar: pd.DataFrame = None
         self.survey: pd.DataFrame = None
