@@ -1,9 +1,9 @@
 from geox.connection import connect_to_endpoint
 from geox.entity.api_endpoint import APIEndpoint
-from geox.http_response.user_projects import HttpReponseUserProjects
+from geox.http_response.http_projects import HttpReponseProjects
 
 
-def get_user_projects(api_key: str) -> HttpReponseUserProjects:
+def get_projects(api_key: str) -> HttpReponseProjects:
     response = connect_to_endpoint(
         url=APIEndpoint.GET_USER_PROJECTS,
         method='GET',
@@ -12,6 +12,6 @@ def get_user_projects(api_key: str) -> HttpReponseUserProjects:
         }
     )
     
-    return HttpReponseUserProjects(response)
+    return HttpReponseProjects(response)
     
     

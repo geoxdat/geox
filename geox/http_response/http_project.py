@@ -3,7 +3,7 @@ from geox.project import Project
 from geox.utils import convert_iso_8601_to_datetime
 
 
-class HttpReponseUserProject():
+class HttpReponseProject():
     def __init__(self, json_response):
         self.project: Project = None
         

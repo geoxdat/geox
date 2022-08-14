@@ -1,6 +1,6 @@
 from geox.connection import connect_to_endpoint
 from geox.entity.api_endpoint import APIEndpoint
-from geox.http_response.initial_auth import HttpReponseInitialAuth
+from geox.http_response.http_initial_auth import HttpReponseInitialAuth
 
 
 def get_initial_auth(api_key: str) -> HttpReponseInitialAuth:
