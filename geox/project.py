@@ -1,4 +1,8 @@
 from datetime import datetime
+from typing import List
+from geox.exceptions import ProjectIDException
+
+from geox.project_version import ProjectVersion
 
 
 class Project:
@@ -8,14 +12,19 @@ class Project:
         self.title: str = None
         self.location: str = None
         self.description: str = None
-        self.created_at: str = None
-        self.updated_at: str = None
-        self.datasets: str = None
-        self.num_of_datasets: str = None
+        self.created_at: datetime = None
+        self.updated_at: datetime = None
+        self.num_of_project_versions: int = None
+        
+        self.project_versions: List[ProjectVersion] = None
         
         # private variables
-        self._is_updated: bool = False
         self._timestamp = datetime.now()
+    
+    
+    def _check_project_id(project_id: str):
+        if not project_id: raise ProjectIDException('Project ID is None or invalid')
+        if not isinstance(project_id, str): raise ProjectIDException('Project ID should be a string')
         
         
     def read_all_project_versions(self):
@@ -24,4 +33,3 @@ class Project:
 
     def read_project_version(self, hash: str):
         ...
-

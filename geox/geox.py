@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List
 from geox.api_caller.initial_auth import get_initial_auth
+from geox.api_caller.user_projects import get_user_projects
+from geox.exceptions import APIKeyException
 
 from geox.project import Project
 from geox.version import VERSION
@@ -8,6 +10,8 @@ from geox.version import VERSION
 
 class GeoX:
     def __init__(self, api_key: str):
+        self._check_api_key(api_key)
+        
         self.api_key: str = api_key
         
         self.email: str = None
@@ -15,22 +19,25 @@ class GeoX:
         self.num_of_projects: int = None
         
         # private variables
-        self._is_authenticated: bool = False
         self._timestamp = datetime.now()
         
         self._initial_auth()
     
     
-    def _initial_auth(self):
-        if not self._is_authenticated:
-            http_response = get_initial_auth(self.api_key)
-            self.email = http_response.email
-            self.num_of_projects = http_response.num_of_projects
-            self._is_authenticated = True
+    def _check_api_key(self, api_key):
+        if not api_key: raise APIKeyException('API Key cannot be None')
+        if not isinstance(api_key, str): raise APIKeyException('API Key should be string')
+    
+        
+    def _initial_auth(self):        
+        http_response = get_initial_auth(self.api_key)
+        self.email = http_response.email
+        self.num_of_projects = http_response.num_of_projects
         
         
     def read_all_projects(self):
-        ...
+        http_response = get_user_projects(self.api_key)
+        self.projects = http_response.projects
 
 
     def read_project(self, project_id: str):

@@ -30,4 +30,5 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
     
     except Exception as e:
         print(e)
+        print()
         sys.exit()
