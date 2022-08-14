@@ -7,6 +7,8 @@ from geox.project_version import ProjectVersion
 
 class Project:
     def __init__(self, project_id: str):
+        self._check_project_id(project_id)
+        
         self.project_id: str = project_id
         
         self.title: str = None
@@ -22,7 +24,7 @@ class Project:
         self._timestamp = datetime.now()
     
     
-    def _check_project_id(project_id: str):
+    def _check_project_id(self, project_id: str) -> None:
         if not project_id: raise ProjectIDException('Project ID is None or invalid')
         if not isinstance(project_id, str): raise ProjectIDException('Project ID should be a string')
         

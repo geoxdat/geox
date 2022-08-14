@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List
 from geox.api_caller.initial_auth import get_initial_auth
+from geox.api_caller.user_project import get_user_project
 from geox.api_caller.user_projects import get_user_projects
 from geox.exceptions import APIKeyException
 
@@ -44,6 +45,8 @@ class GeoX:
 
     def read_project(self, project_id: str) -> Project:
         if not self.email: return
+        http_response = get_user_project(self.api_key, project_id)
+        return http_response.project
 
 
     def version(self):
