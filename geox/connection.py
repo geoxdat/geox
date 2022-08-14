@@ -1,7 +1,7 @@
-from http import HTTPStatus
-import sys
 from geox.exceptions import APIKeyException, ParameterException
+from http import HTTPStatus
 from requests import request, Response
+import sys
 
 
 def check_status_code(response: Response) -> None:
