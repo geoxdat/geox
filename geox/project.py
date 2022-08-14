@@ -1,4 +1,5 @@
 from datetime import datetime
+from geox.api_caller.get_project_version import get_project_version
 from geox.api_caller.get_project_versions import get_project_versions
 from geox.exceptions import APIKeyException, ProjectIDException
 from geox.project_version import ProjectVersion
@@ -43,9 +44,10 @@ class Project:
         self._check_api_key(self._api_key)
         http_response = get_project_versions(self._api_key, self.project_id)
         self.project_versions = http_response.project_versions
-        
         return self.project_versions
 
 
     def read_project_version(self, hash: str):
-        ...
+        self._check_api_key(self._api_key)
+        http_response = get_project_version(self._api_key, hash)
+        return http_response.project_version

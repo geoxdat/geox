@@ -1,4 +1,3 @@
-from typing import List
 from geox.project import Project
 from geox.utils import convert_iso_8601_to_datetime
 
