@@ -12,4 +12,4 @@ def get_initial_auth(api_key: str) -> HttpReponseInitialAuth:
         }
     )
     
-    return HttpReponseInitialAuth(response.json())
+    return HttpReponseInitialAuth(response)

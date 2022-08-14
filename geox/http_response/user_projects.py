@@ -5,15 +5,17 @@ from geox.utils import convert_iso_8601_to_datetime
 
 class HttpReponseUserProjects():
     def __init__(self, json_response):
-        self.projects: List[Project] = []
+        self.projects: List[Project] = None
         
         self._parser(json_response)
     
     
     def _parser(self, json_response):
-        for project_data in json_response['projects']:
-            project_obj = self._create_project(project_data)
-            self.projects.append(project_obj)
+        if 'projects' in json_response:
+            self.projects = []
+            for project_data in json_response['projects']:
+                project_obj = self._create_project(project_data)
+                self.projects.append(project_obj)
             
     
     def _create_project(self, data: dict) -> Project:

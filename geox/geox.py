@@ -35,13 +35,15 @@ class GeoX:
         self.num_of_projects = http_response.num_of_projects
         
         
-    def read_all_projects(self):
+    def read_all_projects(self) -> List[Project]:
+        if not self.email: return
         http_response = get_user_projects(self.api_key)
         self.projects = http_response.projects
+        return self.projects
 
 
-    def read_project(self, project_id: str):
-        ...
+    def read_project(self, project_id: str) -> Project:
+        if not self.email: return
 
 
     def version(self):

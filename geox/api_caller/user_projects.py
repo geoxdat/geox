@@ -12,6 +12,6 @@ def get_user_projects(api_key: str) -> HttpReponseUserProjects:
         }
     )
     
-    return HttpReponseUserProjects(response.json())
+    return HttpReponseUserProjects(response)
     
     

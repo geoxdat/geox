@@ -13,7 +13,7 @@ def check_status_code(response: Response) -> None:
         raise ParameterException(f'Some of the parameter in request is invalid. {response.text}.')
     
 
-def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}) -> Response:
+def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}) -> dict:
     '''Connect to endpoint'''
     try:
         response = request(
@@ -26,9 +26,9 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
         # checking status code
         check_status_code(response)
 
-        return response
+        return response.json()
     
     except Exception as e:
         print(e)
-        print()
-        sys.exit()
+        # sys.exit()
+        return {}
