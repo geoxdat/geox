@@ -7,7 +7,7 @@ import pytest
     ['iI5NXd5VvrblQ4RBpssF3PReuOQMLP9U', 'TST000', 'qYTqTkiPfOY45o4gHNUBzcgcpHjqSzbG'],
     ['wrong api key', 'WRONG', 'WRONG'],
     ])
-def test_read_collar_dataset(api_key: str, project_id: str, hash: str):
+def test_read_user_dataset(api_key: str, project_id: str, hash: str):
     try:
         geox = GeoX(api_key=api_key)
         project = geox.read_project(project_id)
