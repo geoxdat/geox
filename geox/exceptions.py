@@ -9,3 +9,6 @@ class ParameterException(Exception):
 
 class ConverterException(Exception):
     ...
+    
+class ServerErrorException(Exception):
+    ...

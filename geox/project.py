@@ -50,4 +50,5 @@ class Project:
     def read_project_version(self, hash: str):
         self._check_api_key(self._api_key)
         http_response = get_project_version(self._api_key, hash)
+        if http_response.project_version: http_response.project_version.set_api_key(self._api_key)
         return http_response.project_version

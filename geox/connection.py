@@ -28,7 +28,7 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
 
         return response.json()
     
-    except Exception as e:
+    except ParameterException as e:
         print(e)
         # sys.exit()
         return {}
