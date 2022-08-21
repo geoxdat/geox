@@ -1,15 +1,14 @@
+from geox.version import VERSION
 from setuptools import setup
 import pathlib
+
 
 BASE_DIR = pathlib.Path(__file__).parent
 README = (BASE_DIR / "README.md").read_text()
 
-with open(f'{BASE_DIR}/requirements.txt') as f:
-    required = f.read().splitlines()
-
 setup(
     name="geox",
-    version="0.0.1",
+    version=VERSION,
     author="GeoX",
     author_email="geoxdat@gmail.com",
     url='https://github.com/geoxdat/geox',
@@ -17,9 +16,22 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     license='MIT',
-    packages=['geox'],
+    packages=[
+        'geox', 
+        'geox/api_caller',
+        'geox/entity',
+        'geox/factory',
+        'geox/http_response',
+        ],
     include_package_data=True,
-    install_requires=required,
+    install_requires=[
+        'numpy',
+        'pandas',
+        'pytest',
+        'pytz',
+        'requests',
+        'tqdm',
+        ],
     keywords=['geox', 'geostatistic', 'mining', 'dataset'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
