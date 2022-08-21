@@ -1,12 +1,12 @@
 from geox.exceptions import APIKeyException, ParameterException, ServerErrorException
 from http import HTTPStatus
-from requests import request, Response
+from requests import request, Response, packages
 from requests.exceptions import ConnectionError, SSLError
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from time import sleep
-import requests
+from urllib3.exceptions import InsecureRequestWarning
+import urllib3
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def check_status_code(response: Response) -> None:
