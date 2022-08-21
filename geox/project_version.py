@@ -1,11 +1,12 @@
 from datetime import datetime
-import os
-from typing import Optional, Tuple
+from time import sleep
 from geox.api_caller.get_dataset import get_dataset_data
 from geox.entity.dataset_type import DatasetType
-import pandas as pd
-
 from geox.http_response.http_dataset import HttpReponseDataset
+from tqdm import tqdm
+from typing import Optional, Tuple
+import os
+import pandas as pd
 
 
 class ProjectVersion:
@@ -54,13 +55,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Collar Dataset', total=self.num_of_collar_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.COLLAR
+            DatasetType.COLLAR,
+            bar,
             )
         return df
 
@@ -75,13 +78,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Survey Dataset', total=self.num_of_survey_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.SURVEY
+            DatasetType.SURVEY,
+            bar,
             )
         return df
 
@@ -96,13 +101,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Alteration Dataset', total=self.num_of_alteration_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.ALTERATION
+            DatasetType.ALTERATION,
+            bar,
             )
         return df
 
@@ -117,13 +124,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Assay Dataset', total=self.num_of_assay_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.ASSAY
+            DatasetType.ASSAY,
+            bar,
             )
         return df
 
@@ -138,13 +147,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Litho Dataset', total=self.num_of_litho_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.LITHO
+            DatasetType.LITHO,
+            bar,
             )
         return df
 
@@ -159,13 +170,15 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        bar = tqdm(desc='Mineralisation Dataset', total=self.num_of_mineralisation_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
             save_to_file, 
-            DatasetType.MINERALISATION
+            DatasetType.MINERALISATION,
+            bar,
             )
         return df
 
@@ -183,7 +196,15 @@ class ProjectVersion:
         return df, next_index
 
 
-    def _read_dataset_data(self, df: pd.DataFrame, next_index: int, full_filename: str, save_to_file: bool, dataset_type: str) -> pd.DataFrame:
+    def _read_dataset_data(
+        self, 
+        df: pd.DataFrame, 
+        next_index: int, 
+        full_filename: str, 
+        save_to_file: bool, 
+        dataset_type: str,
+        progress_bar: tqdm,
+        ) -> pd.DataFrame:
         '''read dataset data, call api and loop if there is data on the next index, save dataframe to file on each loop'''
         while next_index > -2:
             http_response = get_dataset_data(self._api_key, self.hash, next_index, dataset_type)
@@ -193,11 +214,12 @@ class ProjectVersion:
             new_df = self._build_dataframe(df, http_response)
             if new_df is not None: 
                 df = new_df  
-            else: 
+            else:
                 break
             
             # create pickle file
             if save_to_file: df.to_pickle(full_filename)
+            progress_bar.update(len(http_response.data))
         
         return df
     
