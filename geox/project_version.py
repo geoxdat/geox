@@ -54,6 +54,10 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_collar_rows == 0:
+            print('No collar data in this dataset')
+            return None
+        
         bar = tqdm(desc='Collar Dataset', total=self.num_of_collar_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
@@ -71,12 +75,16 @@ class ProjectVersion:
         """read survey dataset from server
 
         Args:
-            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            filename (str, optional): output filename. Defaults to DatasetType.SURVEY.
             save_to_file (bool, optional): is save to a file. Defaults to True.
 
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_survey_rows == 0:
+            print('No survey data in this dataset')
+            return None
+        
         bar = tqdm(desc='Survey Dataset', total=self.num_of_survey_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
@@ -94,12 +102,16 @@ class ProjectVersion:
         """read alteration dataset from server
 
         Args:
-            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            filename (str, optional): output filename. Defaults to DatasetType.ALTERATION.
             save_to_file (bool, optional): is save to a file. Defaults to True.
 
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_alteration_rows == 0:
+            print('No alteration data in this dataset')
+            return None
+        
         bar = tqdm(desc='Alteration Dataset', total=self.num_of_alteration_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
@@ -117,12 +129,16 @@ class ProjectVersion:
         """read assay dataset from server
 
         Args:
-            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            filename (str, optional): output filename. Defaults to DatasetType.ASSAY.
             save_to_file (bool, optional): is save to a file. Defaults to True.
 
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_assay_rows == 0:
+            print('No assay data in this dataset')
+            return None
+        
         bar = tqdm(desc='Assay Dataset', total=self.num_of_assay_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
@@ -140,12 +156,16 @@ class ProjectVersion:
         """read litho dataset from server
 
         Args:
-            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            filename (str, optional): output filename. Defaults to DatasetType.LITHO.
             save_to_file (bool, optional): is save to a file. Defaults to True.
 
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_litho_rows == 0:
+            print('No litho data in this dataset')
+            return None
+        
         bar = tqdm(desc='Litho Dataset', total=self.num_of_litho_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
@@ -163,12 +183,16 @@ class ProjectVersion:
         """read mineralisation dataset from server
 
         Args:
-            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            filename (str, optional): output filename. Defaults to DatasetType.MINERALISATION.
             save_to_file (bool, optional): is save to a file. Defaults to True.
 
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
+        if self.num_of_mineralisation_rows == 0:
+            print('No mineralisation data in this dataset')
+            return None
+        
         bar = tqdm(desc='Mineralisation Dataset', total=self.num_of_mineralisation_rows)
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
