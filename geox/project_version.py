@@ -142,7 +142,6 @@ class ProjectVersion:
             # create pickle file
             if save_to_file: df.to_pickle(full_filename)
         
-        print(df.head(25))
         return df
     
     

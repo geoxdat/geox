@@ -1,4 +1,4 @@
-from geox.exceptions import APIKeyException, ParameterException
+from geox.exceptions import APIKeyException, ParameterException, ServerErrorException
 from http import HTTPStatus
 from requests import request, Response
 import sys
@@ -12,6 +12,8 @@ def check_status_code(response: Response) -> None:
     elif response.status_code == HTTPStatus.BAD_REQUEST:
         raise ParameterException(f'Some of the parameter in request is invalid. {response.text}.')
     
+    elif response.status_code == HTTPStatus.NOT_FOUND:
+        raise ServerErrorException('404. Not Found response, server error.')
 
 def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}) -> dict:
     '''Connect to endpoint'''
