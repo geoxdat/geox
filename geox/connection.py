@@ -1,10 +1,10 @@
 from geox.exceptions import APIKeyException, ParameterException, ServerErrorException
 from http import HTTPStatus
-from requests import request, Response, packages
+from requests import request, Response
 from requests.exceptions import ConnectionError, SSLError
+from requests.packages import urllib3
 from time import sleep
 from urllib3.exceptions import InsecureRequestWarning
-import urllib3
 
 urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -19,7 +19,7 @@ def check_status_code(response: Response) -> None:
     elif response.status_code == HTTPStatus.NOT_FOUND:
         raise ServerErrorException('404. Not Found response, server error.')
 
-def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}, verify_ssl:bool=True) -> dict:
+def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}, verify_ssl:bool=False) -> dict:
     '''Connect to endpoint'''
     try:
         response = request(
