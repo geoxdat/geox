@@ -9,6 +9,9 @@ from geox.http_response.http_dataset import HttpReponseDataset
 
 
 class ProjectVersion:
+    """Project version defined by project version hash, 
+    may contain collar, survey, alteration, assay, litho, or mineralisation dataset.
+    """
     def __init__(self, hash: str):
         self.hash: str = hash
         
@@ -42,6 +45,15 @@ class ProjectVersion:
         
         
     def read_collar_data(self, filename: str=DatasetType.COLLAR, save_to_file: bool=True) -> pd.DataFrame:
+        """read collar dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
@@ -54,6 +66,15 @@ class ProjectVersion:
 
         
     def read_survey_data(self, filename: str=DatasetType.SURVEY, save_to_file: bool=True) -> pd.DataFrame:
+        """read survey dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
@@ -66,6 +87,15 @@ class ProjectVersion:
 
         
     def read_alteration_data(self, filename: str=DatasetType.ALTERATION, save_to_file: bool=True) -> pd.DataFrame:
+        """read alteration dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
@@ -78,6 +108,15 @@ class ProjectVersion:
 
         
     def read_assay_data(self, filename: str=DatasetType.ASSAY, save_to_file: bool=True) -> pd.DataFrame:
+        """read assay dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
@@ -90,6 +129,15 @@ class ProjectVersion:
 
         
     def read_litho_data(self, filename: str=DatasetType.LITHO, save_to_file: bool=True) -> pd.DataFrame:
+        """read litho dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 
@@ -102,6 +150,15 @@ class ProjectVersion:
 
         
     def read_mineralisation_data(self, filename: str=DatasetType.MINERALISATION, save_to_file: bool=True) -> pd.DataFrame:
+        """read mineralisation dataset from server
+
+        Args:
+            filename (str, optional): output filename. Defaults to DatasetType.COLLAR.
+            save_to_file (bool, optional): is save to a file. Defaults to True.
+
+        Returns:
+            pd.DataFrame: dataset pandas dataframe
+        """
         df, next_index = self._read_initial_dataframe(filename)
         df = self._read_dataset_data(
             df, 

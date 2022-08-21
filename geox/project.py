@@ -7,6 +7,8 @@ from typing import List
 
 
 class Project:
+    """Project, defined by project id, may contain various project versions
+    """
     def __init__(self, project_id: str):
         self._check_project_id(project_id)
         
@@ -41,13 +43,26 @@ class Project:
         
         
     def read_all_project_versions(self) -> List[ProjectVersion]:
+        """Read all project versions of this project
+
+        Returns:
+            List[Project]: List of Project Versions
+        """
         self._check_api_key(self._api_key)
         http_response = get_project_versions(self._api_key, self.project_id)
         self.project_versions = http_response.project_versions
         return self.project_versions
 
 
-    def read_project_version(self, hash: str):
+    def read_project_version(self, hash: str) -> ProjectVersion:
+        """Read specific project version
+
+        Args:
+            hash (str): project version hash
+
+        Returns:
+            ProjectVersion: Project Version object
+        """
         self._check_api_key(self._api_key)
         http_response = get_project_version(self._api_key, hash)
         if http_response.project_version: http_response.project_version.set_api_key(self._api_key)

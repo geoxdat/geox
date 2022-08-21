@@ -1,4 +1,6 @@
 class DatasetType:
+    """All type of dataset
+    """
     COLLAR = 'collar'
     SURVEY = 'survey'
     ALTERATION = 'alteration'
