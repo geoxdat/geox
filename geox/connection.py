@@ -23,7 +23,8 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
             method=method, 
             url=url, 
             headers = headers, 
-            params = params
+            params = params,
+            verify=False,
             )
         
         # checking status code
