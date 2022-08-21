@@ -16,7 +16,7 @@ def check_status_code(response: Response) -> None:
     elif response.status_code == HTTPStatus.NOT_FOUND:
         raise ServerErrorException('404. Not Found response, server error.')
 
-def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}) -> dict:
+def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}, verify_ssl:bool=True) -> dict:
     '''Connect to endpoint'''
     try:
         response = request(
@@ -24,7 +24,7 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
             url=url, 
             headers = headers, 
             params = params,
-            verify=False,
+            verify=verify_ssl,
             )
         
         # checking status code
@@ -40,4 +40,4 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
     except ConnectionError as e:
         print('Connection Error. Retrying in 5 seconds')
         sleep(5)
-        return connect_to_endpoint(url, method, headers, params)
+        return connect_to_endpoint(url, method, headers, params, verify_ssl=False)
