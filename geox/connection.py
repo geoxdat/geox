@@ -3,7 +3,6 @@ from geox.exceptions import APIKeyException, ParameterException, ServerErrorExce
 from http import HTTPStatus
 from requests import request, Response
 from requests.exceptions import ConnectionError
-import sys
 
 
 def check_status_code(response: Response) -> None:

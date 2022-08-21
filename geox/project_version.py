@@ -1,5 +1,4 @@
 from datetime import datetime
-from time import sleep
 from geox.api_caller.get_dataset import get_dataset_data
 from geox.entity.dataset_type import DatasetType
 from geox.http_response.http_dataset import HttpReponseDataset

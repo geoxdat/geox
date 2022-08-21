@@ -1,12 +1,11 @@
 from datetime import datetime
-from typing import List
 from geox.api_caller.get_initial_auth import get_initial_auth
 from geox.api_caller.get_project import get_project
 from geox.api_caller.get_projects import get_projects
 from geox.exceptions import APIKeyException
-
 from geox.project import Project
 from geox.version import VERSION
+from typing import List
 
 
 class GeoX:
