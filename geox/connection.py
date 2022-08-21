@@ -2,7 +2,7 @@ from time import sleep
 from geox.exceptions import APIKeyException, ParameterException, ServerErrorException
 from http import HTTPStatus
 from requests import request, Response
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, SSLError
 
 
 def check_status_code(response: Response) -> None:
@@ -37,7 +37,10 @@ def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}
         # sys.exit()
         return {}
     
-    except ConnectionError as e:
+    except SSLError:
+        return connect_to_endpoint(url, method, headers, params, verify_ssl=False)
+        
+    except ConnectionError:
         print('Connection Error. Retrying in 5 seconds')
         sleep(5)
-        return connect_to_endpoint(url, method, headers, params, verify_ssl=False)
+        return connect_to_endpoint(url, method, headers, params)
