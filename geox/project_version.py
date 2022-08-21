@@ -60,7 +60,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Collar Dataset', total=self.num_of_collar_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.collar = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -68,7 +68,7 @@ class ProjectVersion:
             DatasetType.COLLAR,
             bar,
             )
-        return df
+        return self.collar
 
         
     def read_survey_data(self, filename: str=DatasetType.SURVEY, save_to_file: bool=True) -> pd.DataFrame:
@@ -87,7 +87,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Survey Dataset', total=self.num_of_survey_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.survey = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -95,7 +95,7 @@ class ProjectVersion:
             DatasetType.SURVEY,
             bar,
             )
-        return df
+        return self.survey
 
         
     def read_alteration_data(self, filename: str=DatasetType.ALTERATION, save_to_file: bool=True) -> pd.DataFrame:
@@ -114,7 +114,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Alteration Dataset', total=self.num_of_alteration_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.alteration = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -122,7 +122,7 @@ class ProjectVersion:
             DatasetType.ALTERATION,
             bar,
             )
-        return df
+        return self.alteration
 
         
     def read_assay_data(self, filename: str=DatasetType.ASSAY, save_to_file: bool=True) -> pd.DataFrame:
@@ -141,7 +141,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Assay Dataset', total=self.num_of_assay_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.assay = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -149,7 +149,7 @@ class ProjectVersion:
             DatasetType.ASSAY,
             bar,
             )
-        return df
+        return self.assay
 
         
     def read_litho_data(self, filename: str=DatasetType.LITHO, save_to_file: bool=True) -> pd.DataFrame:
@@ -168,7 +168,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Litho Dataset', total=self.num_of_litho_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.litho = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -176,7 +176,7 @@ class ProjectVersion:
             DatasetType.LITHO,
             bar,
             )
-        return df
+        return self.litho
 
         
     def read_mineralisation_data(self, filename: str=DatasetType.MINERALISATION, save_to_file: bool=True) -> pd.DataFrame:
@@ -195,7 +195,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Mineralisation Dataset', total=self.num_of_mineralisation_rows)
         df, next_index = self._read_initial_dataframe(filename)
-        df = self._read_dataset_data(
+        self.mineralisation = self._read_dataset_data(
             df, 
             next_index, 
             self._create_full_filename(filename), 
@@ -203,7 +203,7 @@ class ProjectVersion:
             DatasetType.MINERALISATION,
             bar,
             )
-        return df
+        return self.mineralisation
 
 
     def _create_full_filename(self, filename: str) -> str:
