@@ -1,4 +1,5 @@
 from geox import GeoX
+from geox.entity import DatasetType
 
 
 geox = GeoX(api_key='POmg5QSkDeNYTfxSeRqsl4sk9OWmHTON')
