@@ -6,6 +6,7 @@ from tqdm import tqdm
 from typing import Optional, Tuple
 import os
 import pandas as pd
+import numpy as np
 
 
 class ProjectVersion:
@@ -252,6 +253,7 @@ class ProjectVersion:
         # create dataframe
         if len(http_response.data) > 0:
             new_df = pd.DataFrame.from_dict(http_response.data)
+            new_df = new_df.fillna(value=np.nan)
         else:
             return None
         
