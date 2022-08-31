@@ -18,7 +18,10 @@ def check_status_code(response: Response) -> None:
         raise ParameterException(f'Some of the parameter in request is invalid. {response.text}.')
     
     elif response.status_code == HTTPStatus.NOT_FOUND:
-        raise ServerErrorException('404. Not Found response, server error.')
+        raise ServerErrorException('Not Found response.')
+    
+    elif response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
+        raise ServerErrorException('Internal server error.')
 
 
 def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}, verify_ssl:bool=True) -> dict:
