@@ -49,6 +49,9 @@ class GeoX:
         if not self.email: return
         http_response = get_projects(self.api_key)
         self.projects = http_response.projects
+        for project in self.projects:
+            project.set_api_key(self.api_key)
+            
         return self.projects
 
 
