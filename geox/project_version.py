@@ -27,8 +27,8 @@ class ProjectVersion:
         
         self.created_at: datetime = None
         
-        self.num_of_collar_rows: int = None
         self.num_of_survey_rows: int = None
+        self.num_of_collar_rows: int = None
         self.num_of_alteration_rows: int = None
         self.num_of_assay_rows: int = None
         self.num_of_litho_rows: int = None
@@ -61,6 +61,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Collar Dataset', total=self.num_of_collar_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.collar = self._read_dataset_data(
             df, 
             next_index, 
@@ -88,6 +89,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Survey Dataset', total=self.num_of_survey_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.survey = self._read_dataset_data(
             df, 
             next_index, 
@@ -115,6 +117,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Alteration Dataset', total=self.num_of_alteration_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.alteration = self._read_dataset_data(
             df, 
             next_index, 
@@ -142,6 +145,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Assay Dataset', total=self.num_of_assay_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.assay = self._read_dataset_data(
             df, 
             next_index, 
@@ -169,6 +173,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Litho Dataset', total=self.num_of_litho_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.litho = self._read_dataset_data(
             df, 
             next_index, 
@@ -196,6 +201,7 @@ class ProjectVersion:
         
         bar = tqdm(desc='Mineralisation Dataset', total=self.num_of_mineralisation_rows)
         df, next_index = self._read_initial_dataframe(filename)
+        if df is not None: bar.update(df.shape[0])
         self.mineralisation = self._read_dataset_data(
             df, 
             next_index, 
