@@ -12,3 +12,6 @@ class ConverterException(Exception):
     
 class ServerErrorException(Exception):
     ...
+    
+class DatasetTypeException(Exception):
+    ...
