@@ -22,6 +22,9 @@ def check_status_code(response: Response) -> None:
     
     elif response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
         raise ServerErrorException('Internal server error.')
+    
+    elif response.status_code == HTTPStatus.BAD_GATEWAY:
+        raise ServerErrorException('Bad gateway error.')
 
 
 def connect_to_endpoint(url: str, method: str, headers: dict={}, params:dict ={}, verify_ssl:bool=True) -> dict:
