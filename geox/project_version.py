@@ -1,4 +1,5 @@
 from datetime import datetime
+import pickle
 from geox.api_caller.get_dataset import get_dataset_data
 from geox.entity.dataset_type import DatasetType
 from geox.http_response.http_dataset import HttpReponseDataset
@@ -248,7 +249,8 @@ class ProjectVersion:
                 break
             
             # create pickle file
-            if save_to_file: df.to_pickle(full_filename)
+            if save_to_file: 
+                self._save_to_pickle(df, full_filename)
             progress_bar.update(len(http_response.data))
         
         return df
@@ -272,3 +274,7 @@ class ProjectVersion:
             
         return df
     
+    
+    def _save_to_pickle(self, data: pd.DataFrame, full_filename: str):
+        with open(full_filename, 'wb') as file:
+            pickle.dump(data, file)
