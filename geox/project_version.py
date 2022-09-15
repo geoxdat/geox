@@ -1,14 +1,17 @@
 from datetime import datetime
+from typing import Optional, Tuple
+import os
 import pickle
+
+from tqdm import tqdm
+import numpy as np
+import pandas as pd
+
 from geox.api_caller.get_dataset import get_dataset_data
 from geox.entity.dataset_type import DatasetType
 from geox.exceptions import DatasetTypeException
+from geox.geox_file import GeoXFile
 from geox.http_response.http_dataset import HttpReponseDataset
-from tqdm import tqdm
-from typing import Optional, Tuple
-import os
-import pandas as pd
-import numpy as np
 
 
 class ProjectVersion:
@@ -160,8 +163,13 @@ class ProjectVersion:
    
     
     def _read_saved_dataframe(self, filename: str) -> pd.DataFrame:
+        df = None
         full_filename = self._create_full_filename(filename)
-        df = pd.read_pickle(full_filename) if os.path.isfile(full_filename) else None
+        if os.path.isfile(full_filename):
+            geox_file = self._read_from_GeoXFile(full_filename)
+            if geox_file and geox_file.version_hash == self.hash:
+                df = geox_file.dataframe
+            
         return df
 
 
@@ -197,26 +205,37 @@ class ProjectVersion:
     
 
     def _read_dataset_data(self, dataset_type: str, filename: str, save_to_file: bool):
+        data = None # iniitalize returned data as None
+        
+        # count num of row in the dataset
         num_of_rows = self._get_number_of_rows(dataset_type)
         if num_of_rows == 0:
             print('No collar data in this dataset')
             return None
         
+        # create progress bar
         bar = tqdm(desc=f'{dataset_type} dataset', total=num_of_rows)
+        
+        # check saved version
         if save_to_file:
             df, next_index = self._initialization(filename)
             if df is not None: bar.update(df.shape[0])
         else:
             df, next_index = None, -1
         
-        data = self._execute_api(
-            df=df, 
-            next_index=next_index, 
-            full_filename=self._create_full_filename(filename), 
-            save_to_file=save_to_file, 
-            dataset_type=dataset_type,
-            progress_bar=bar,
-            )
+        # check is dataframe size is already same as number of rows
+        if df is not None and df.shape[0] == num_of_rows:
+            data = df
+        else:
+            # if not, call api to retrieve data
+            data = self._execute_api(
+                df=df, 
+                next_index=next_index, 
+                full_filename=self._create_full_filename(filename), 
+                save_to_file=save_to_file, 
+                dataset_type=dataset_type,
+                progress_bar=bar,
+                )
         return data
 
         
@@ -243,7 +262,7 @@ class ProjectVersion:
             
             # create pickle file
             if save_to_file: 
-                self._save_to_pickle(df, full_filename)
+                self._save_to_GeoXFile(df, full_filename)
             progress_bar.update(len(http_response.data))
         
         return df
@@ -268,18 +287,22 @@ class ProjectVersion:
         return df
     
     
-    def _save_to_pickle(self, data: pd.DataFrame, full_filename: str):
+    def _read_from_GeoXFile(self, full_filename) -> GeoXFile:
+        with open(full_filename, 'rb') as f:
+            data = pickle.load(f)
+            if isinstance(data, GeoXFile):
+                return data
+            else: 
+                return None
+    
+    
+    def _save_to_GeoXFile(self, data: pd.DataFrame, full_filename: str):
         with open(full_filename, 'wb') as file:
+            data = GeoXFile(version_hash=self.hash, dataframe=data)
             pickle.dump(data, file)
             
             
     def __str__(self):
-        print('num_of_survey_rows', self.num_of_survey_rows)
-        print('num_of_collar_rows', self.num_of_collar_rows)
-        print('num_of_alteration_rows', self.num_of_alteration_rows)
-        print('num_of_assay_rows', self.num_of_assay_rows)
-        print('num_of_litho_rows', self.num_of_litho_rows)
-        print('num_of_mineralisation_rows', self.num_of_mineralisation_rows)
         return f"""Project Version {self.hash}
 total survey rows : {self.num_of_survey_rows}
 total collar rows : {self.num_of_collar_rows}
