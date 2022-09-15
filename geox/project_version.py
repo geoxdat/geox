@@ -2,6 +2,7 @@ from datetime import datetime
 import pickle
 from geox.api_caller.get_dataset import get_dataset_data
 from geox.entity.dataset_type import DatasetType
+from geox.exceptions import DatasetTypeException
 from geox.http_response.http_dataset import HttpReponseDataset
 from tqdm import tqdm
 from typing import Optional, Tuple
@@ -18,14 +19,6 @@ class ProjectVersion:
         self.hash: str = hash
         
         self.id: int = None
-        
-        self.collar: pd.DataFrame = None
-        self.survey: pd.DataFrame = None
-        self.alteration: pd.DataFrame = None
-        self.assay: pd.DataFrame = None
-        self.litho: pd.DataFrame = None
-        self.mineralisation: pd.DataFrame = None
-        
         self.created_at: datetime = None
         
         self.num_of_survey_rows: int = None
@@ -56,22 +49,12 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_collar_rows == 0:
-            print('No collar data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Collar Dataset', total=self.num_of_collar_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.collar = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.COLLAR,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.COLLAR, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.collar
+        return data
 
         
     def read_survey_data(self, filename: str=DatasetType.SURVEY, save_to_file: bool=True) -> pd.DataFrame:
@@ -84,22 +67,12 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_survey_rows == 0:
-            print('No survey data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Survey Dataset', total=self.num_of_survey_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.survey = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.SURVEY,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.SURVEY, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.survey
+        return data
 
         
     def read_alteration_data(self, filename: str=DatasetType.ALTERATION, save_to_file: bool=True) -> pd.DataFrame:
@@ -112,22 +85,12 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_alteration_rows == 0:
-            print('No alteration data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Alteration Dataset', total=self.num_of_alteration_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.alteration = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.ALTERATION,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.ALTERATION, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.alteration
+        return data
 
         
     def read_assay_data(self, filename: str=DatasetType.ASSAY, save_to_file: bool=True) -> pd.DataFrame:
@@ -140,23 +103,13 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_assay_rows == 0:
-            print('No assay data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Assay Dataset', total=self.num_of_assay_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.assay = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.ASSAY,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.ASSAY, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.assay
-
+        return data
+  
         
     def read_litho_data(self, filename: str=DatasetType.LITHO, save_to_file: bool=True) -> pd.DataFrame:
         """read litho dataset from server
@@ -168,22 +121,12 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_litho_rows == 0:
-            print('No litho data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Litho Dataset', total=self.num_of_litho_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.litho = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.LITHO,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.LITHO, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.litho
+        return data
 
         
     def read_mineralisation_data(self, filename: str=DatasetType.MINERALISATION, save_to_file: bool=True) -> pd.DataFrame:
@@ -196,22 +139,12 @@ class ProjectVersion:
         Returns:
             pd.DataFrame: dataset pandas dataframe
         """
-        if self.num_of_mineralisation_rows == 0:
-            print('No mineralisation data in this dataset')
-            return None
-        
-        bar = tqdm(desc='Mineralisation Dataset', total=self.num_of_mineralisation_rows)
-        df, next_index = self._read_initial_dataframe(filename)
-        if df is not None: bar.update(df.shape[0])
-        self.mineralisation = self._read_dataset_data(
-            df, 
-            next_index, 
-            self._create_full_filename(filename), 
-            save_to_file, 
-            DatasetType.MINERALISATION,
-            bar,
+        data = self._read_dataset_data(
+            dataset_type=DatasetType.MINERALISATION, 
+            filename=filename, 
+            save_to_file=save_to_file
             )
-        return self.mineralisation
+        return data
 
 
     def _create_full_filename(self, filename: str) -> str:
@@ -219,15 +152,75 @@ class ProjectVersion:
         return filename + self._default_filetype
     
     
-    def _read_initial_dataframe(self, filename: str) -> Tuple[pd.DataFrame, int]:
+    def _initialization(self, filename: str) -> Tuple[pd.DataFrame, int]:
         '''read or create initial dataframe'''
+        df = self._read_saved_dataframe(filename)
+        next_index = self._read_next_index(df)
+        return df, next_index
+   
+    
+    def _read_saved_dataframe(self, filename: str) -> pd.DataFrame:
         full_filename = self._create_full_filename(filename)
         df = pd.read_pickle(full_filename) if os.path.isfile(full_filename) else None
-        next_index = df['id'].max() + 1 if os.path.isfile(full_filename) else -1
-        return df, next_index
+        return df
 
 
-    def _read_dataset_data(
+    def _read_next_index(self, df: pd.DataFrame) -> int:
+        next_index = df['id'].max() + 1 if df is not None else -1
+        return next_index
+
+
+    def _get_number_of_rows(self, dataset_type: str):
+        num = 0
+        if dataset_type == DatasetType.COLLAR:
+            num = self.num_of_collar_rows
+        
+        elif dataset_type == DatasetType.SURVEY:
+            num = self.num_of_survey_rows
+        
+        elif dataset_type == DatasetType.ALTERATION:
+            num = self.num_of_alteration_rows
+        
+        elif dataset_type == DatasetType.ASSAY:
+            num = self.num_of_assay_rows
+        
+        elif dataset_type == DatasetType.LITHO:
+            num = self.num_of_litho_rows
+        
+        elif dataset_type == DatasetType.MINERALISATION:
+            num = self.num_of_mineralisation_rows
+            
+        else:
+            raise DatasetTypeException(f"{dataset_type} is not a valid dataset type")
+        
+        return num
+    
+
+    def _read_dataset_data(self, dataset_type: str, filename: str, save_to_file: bool):
+        num_of_rows = self._get_number_of_rows(dataset_type)
+        if num_of_rows == 0:
+            print('No collar data in this dataset')
+            return None
+        
+        bar = tqdm(desc=f'{dataset_type} dataset', total=num_of_rows)
+        if save_to_file:
+            df, next_index = self._initialization(filename)
+            if df is not None: bar.update(df.shape[0])
+        else:
+            df, next_index = None, -1
+        
+        data = self._execute_api(
+            df=df, 
+            next_index=next_index, 
+            full_filename=self._create_full_filename(filename), 
+            save_to_file=save_to_file, 
+            dataset_type=dataset_type,
+            progress_bar=bar,
+            )
+        return data
+
+        
+    def _execute_api(
         self, 
         df: pd.DataFrame, 
         next_index: int, 
@@ -237,7 +230,7 @@ class ProjectVersion:
         progress_bar: tqdm,
         ) -> pd.DataFrame:
         '''read dataset data, call api and loop if there is data on the next index, save dataframe to file on each loop'''
-        while next_index > -2:
+        while next_index >= -1:
             http_response = get_dataset_data(self._api_key, self.hash, next_index, dataset_type)
             next_index = http_response.get_next_index()
             
@@ -278,3 +271,20 @@ class ProjectVersion:
     def _save_to_pickle(self, data: pd.DataFrame, full_filename: str):
         with open(full_filename, 'wb') as file:
             pickle.dump(data, file)
+            
+            
+    def __str__(self):
+        print('num_of_survey_rows', self.num_of_survey_rows)
+        print('num_of_collar_rows', self.num_of_collar_rows)
+        print('num_of_alteration_rows', self.num_of_alteration_rows)
+        print('num_of_assay_rows', self.num_of_assay_rows)
+        print('num_of_litho_rows', self.num_of_litho_rows)
+        print('num_of_mineralisation_rows', self.num_of_mineralisation_rows)
+        return f"""Project Version {self.hash}
+total survey rows : {self.num_of_survey_rows}
+total collar rows : {self.num_of_collar_rows}
+total alteration rows : {self.num_of_alteration_rows}
+total assay rows : {self.num_of_assay_rows}
+total litho rows : {self.num_of_litho_rows}
+total mineralisation rows : {self.num_of_mineralisation_rows}
+"""
