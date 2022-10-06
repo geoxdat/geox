@@ -210,7 +210,7 @@ class ProjectVersion:
         # count num of row in the dataset
         num_of_rows = self._get_number_of_rows(dataset_type)
         if num_of_rows == 0:
-            print('No collar data in this dataset')
+            print(f'No {dataset_type} data in this dataset')
             return None
         
         # create progress bar
