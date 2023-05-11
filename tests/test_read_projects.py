@@ -2,9 +2,10 @@ from geox import GeoX
 from geox.exceptions import APIKeyException 
 import pytest
 
+from .dummy_data import API_KEY, PROJECT_VERSON_HASH, PROJECT_ID
 
 @pytest.mark.parametrize('api_key, is_projects_loaded', [
-    ['iI5NXd5VvrblQ4RBpssF3PReuOQMLP9U', True],
+    [API_KEY, True],
     ['wrong api key', False],
     [None, False],
     ])

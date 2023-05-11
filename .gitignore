@@ -13,3 +13,5 @@ dist
 
 *.geox
 .ipynb_*
+
+main.py

@@ -2,9 +2,10 @@ from geox import GeoX
 from geox.exceptions import APIKeyException, ServerErrorException 
 import pytest
 
+from .dummy_data import API_KEY, PROJECT_VERSON_HASH, PROJECT_ID
 
 @pytest.mark.parametrize('api_key, project_id, hash', [
-    ['iI5NXd5VvrblQ4RBpssF3PReuOQMLP9U', 'TST000', 'qYTqTkiPfOY45o4gHNUBzcgcpHjqSzbG'],
+    [API_KEY, PROJECT_ID, PROJECT_VERSON_HASH],
     ['wrong api key', 'WRONG', 'WRONG'],
     ])
 def test_read_user_dataset(api_key: str, project_id: str, hash: str):

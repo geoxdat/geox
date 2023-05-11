@@ -1,10 +1,10 @@
 from geox import GeoX
 from geox.exceptions import APIKeyException 
 import pytest
-
+from .dummy_data import API_KEY, PROJECT_VERSON_HASH, PROJECT_ID
 
 @pytest.mark.parametrize('api_key, email', [
-    ['iI5NXd5VvrblQ4RBpssF3PReuOQMLP9U', 'razifrizqullah@gmail.com'],
+    [API_KEY, 'razifrizqullah@gmail.com'],
     ['wrong api key', None],
     [None, None],
     ])
